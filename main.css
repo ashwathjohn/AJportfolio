@@ -401,12 +401,16 @@ span{
     opacity: 0;
 
 }
+
+
+
 .certifications-box:hover  .certifications-layer{
     opacity: 1;
 }
 
 .certifications-layer h3{
     font-size: 2rem;
+    color:black;
 }
 
 
