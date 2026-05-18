@@ -275,6 +275,7 @@ span{
     justify-content: center;
     align-items: center;
     gap: 4rem;
+    margin-top: 100px;
 }
 
 .about-img img{
