@@ -1,56 +1,9 @@
-let menuIcon = document.querySelector('#menu-icon');
-let navbar = document.querySelector('.navbar');
-
-menuIcon.onclick = () =>{
-  menuIcon.classList.toggle('bx-x');
-  navbar.classList.toggle('active');
-};
-
-let sections = document.querySelectorAll('section');
-let navLinks = document.querySelectorAll('header nav a');
-
-window.onscroll = () => {
-    sections.forEach(sec => {
-      let top = window.scrollY;
-      let offset = sec.offsetTop - 150;
-      let height = sec.offsetHeight;
-      let id = sec.getAttribute('id');
-
-      if(top >= offset && top < offset + height) {
-               navLinks.forEach(links => {
-                links.classList.remove('active');
-                document.querySelector('header nav a[href*=' + id + ' ]').classList.add('active');
-               });
-      };
-    });
-let header = document.querySelector('.header');
-
-header.classList.toggle('sticky',window.scrollY > 100);
-
-menuIcon.classList.remove('bx-x');
-navbar.classList.remove('active');
-
-};
-
-
-let darkmodeIcon = document.querySelector('#darkmode-icon');
-
-darkmodeIcon.onclick = () => {
-  darkmodeIcon.classList.toggle('bx-sun');
-  document.body.classList.toggle('dark-mode');
-};
-
-   ScrollReveal({
-     reset: true ,
-     distance:'80px',
-     duration:2000,
-     delay:100
-    });
-
-    ScrollReveal().reveal('.home-content, .heading', { origin: 'top' });
-     ScrollReveal().reveal('.home-img img, .skills-container,.certifications-container ,.contact form',
-      { origin: 'bottom' });
-         ScrollReveal().reveal('.home-img img, .skills-container,.certifications-container ,.contact form',
-      { origin: 'left' });
-            ScrollReveal().reveal('.home-content h1, .about-img img',{ origin: 'left' });
-            ScrollReveal().reveal('.home-content h3,.home-content p, .about-content',{ origin: 'left' });
+const header=document.querySelector("#site-header"),menu=document.querySelector(".menu-button"),mobile=document.querySelector(".mobile-nav"),cursor=document.querySelector(".cursor"),sections=[...document.querySelectorAll("main section[id]")],links=[...document.querySelectorAll(".desktop-nav a,.mobile-nav a")];
+document.querySelector("#year").textContent=new Date().getFullYear();
+menu.addEventListener("click",()=>{const open=menu.classList.toggle("open");mobile.classList.toggle("open",open);document.body.classList.toggle("menu-open",open);menu.setAttribute("aria-expanded",String(open));menu.setAttribute("aria-label",open?"Close menu":"Open menu")});
+mobile.querySelectorAll("a").forEach(link=>link.addEventListener("click",()=>{menu.classList.remove("open");mobile.classList.remove("open");document.body.classList.remove("menu-open");menu.setAttribute("aria-expanded","false")}));
+const observer=new IntersectionObserver(entries=>entries.forEach(entry=>{if(entry.isIntersecting){entry.target.classList.add("visible");observer.unobserve(entry.target)}}),{threshold:.12});
+document.querySelectorAll(".reveal").forEach(element=>observer.observe(element));
+const update=()=>{header.classList.toggle("scrolled",scrollY>30);const marker=scrollY+innerHeight*.3;let current="";sections.forEach(section=>{if(marker>=section.offsetTop)current=section.id});links.forEach(link=>link.classList.toggle("active",link.getAttribute("href")===`#${current}`))};
+addEventListener("scroll",update,{passive:true});update();
+if(matchMedia("(hover:hover) and (pointer:fine)").matches){addEventListener("mousemove",event=>{cursor.style.left=`${event.clientX}px`;cursor.style.top=`${event.clientY}px`});document.querySelectorAll("a,button").forEach(element=>{element.addEventListener("mouseenter",()=>cursor.classList.add("hover"));element.addEventListener("mouseleave",()=>cursor.classList.remove("hover"))})}
